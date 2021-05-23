@@ -38,6 +38,7 @@ private final JTextField textFieldFrom;
 private final JTextField textFieldTo;
 private final JTextArea textAreaIncoming;
 private final JTextArea textAreaOutgoing;
+private String date;
 public MainFrame() {
 super(FRAME_TITLE);
 setMinimumSize(
@@ -69,6 +70,7 @@ final JButton sendButton = new JButton("Отправить");
 sendButton.addActionListener(new ActionListener() {
 @Override
 public void actionPerformed(ActionEvent e) {
+date=getDateTime();
 sendMessage();
 }
 });
@@ -161,7 +163,18 @@ final String senderName = textFieldFrom.getText();
 final String destinationAddress = textFieldTo.getText();
 final String message = textAreaOutgoing.getText();
 final String Datt = date;
-// Убеждаемся, что поля не пустые
+if(!destinationAddress.isEmpty()){
+				Pattern p = Pattern.compile("[0-9][0-9]?[0-9]?.{1}[0-9][0-9]?[0-9]?.{1}[0-9][0-9]?[0-9]?.{1}[0-9][0-9]?[0-9]?");
+				Matcher m = p.matcher(destinationAddress);
+				boolean b = m.matches();		
+				if(!b) {		
+					JOptionPane.showMessageDialog(this, "Некоректно введен IP" , "Ошибка",
+							JOptionPane.ERROR_MESSAGE);
+					textFieldTo.grabFocus();
+					return;
+					}		
+			}
+ // Убеждаемся, что поля не пустые
 if (senderName.isEmpty()) {
 JOptionPane.showMessageDialog(this, 
 "Введите имя отправителя", "Ошибка",
@@ -190,10 +203,11 @@ new DataOutputStream(socket.getOutputStream());
 out.writeUTF(senderName);
 // Записываем в поток сообщение
 out.writeUTF(message);
+ out.writeUTF(Datt);
 // Закрываем сокет
 socket.close();
 // Помещаем сообщения в текстовую область вывода
-textAreaIncoming.append("Я -> " + destinationAddress + ": "
+textAreaIncoming.append(Datt +" Я -> " + destinationAddress + ": "
 + message + "\n");
 // Очищаем текстовую область ввода сообщения
 textAreaOutgoing.setText("");
