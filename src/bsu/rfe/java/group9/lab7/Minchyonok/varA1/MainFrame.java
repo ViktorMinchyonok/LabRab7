@@ -50,8 +50,7 @@ setLocation((kit.getScreenSize().width - getWidth()) / 2,
 textAreaIncoming = new JTextArea(INCOMING_AREA_DEFAULT_ROWS, 0);
 textAreaIncoming.setEditable(false);
 // Контейнер, обеспечивающий прокрутку текстовой области
-final JScrollPane scrollPaneIncoming = 
-new JScrollPane(textAreaIncoming);
+final JScrollPane scrollPaneIncoming = new JScrollPane(textAreaIncoming);
 // Подписи полей
 final JLabel labelFrom = new JLabel("Подпись");
 final JLabel labelTo = new JLabel("Получатель");
@@ -61,12 +60,10 @@ textFieldTo = new JTextField(TO_FIELD_DEFAULT_COLUMNS);
 // Текстовая область для ввода сообщения
 textAreaOutgoing = new JTextArea(OUTGOING_AREA_DEFAULT_ROWS, 0);
 // Контейнер, обеспечивающий прокрутку текстовой области
-final JScrollPane scrollPaneOutgoing = 
-new JScrollPane(textAreaOutgoing);
+final JScrollPane scrollPaneOutgoing = new JScrollPane(textAreaOutgoing);
 // Панель ввода сообщения
 final JPanel messagePanel = new JPanel();
-messagePanel.setBorder(
-BorderFactory.createTitledBorder("Сообщение"));
+messagePanel.setBorder(BorderFactory.createTitledBorder("Сообщение"));
 // Кнопка отправки сообщения
 final JButton sendButton = new JButton("Отправить");
 sendButton.addActionListener(new ActionListener() {
@@ -134,7 +131,8 @@ socket.getInputStream());
 final String senderName = in.readUTF();
 // Читаем сообщение
 final String message = in.readUTF();
-// Закрываем соединение
+final String Dat = in.readUTF();
+ // Закрываем соединение
 socket.close();
 // Выделяем IP-адрес
 final String address = 
@@ -143,7 +141,7 @@ final String address =
 .getAddress()
 .getHostAddress();
 // Выводим сообщение в текстовую область
-textAreaIncoming.append(senderName + 
+textAreaIncoming.append(Dat + senderName + 
 " (" + address + "): " + 
 message + "\n");
 }
@@ -162,6 +160,7 @@ try {
 final String senderName = textFieldFrom.getText();
 final String destinationAddress = textFieldTo.getText();
 final String message = textAreaOutgoing.getText();
+final String Datt = date;
 // Убеждаемся, что поля не пустые
 if (senderName.isEmpty()) {
 JOptionPane.showMessageDialog(this, 
