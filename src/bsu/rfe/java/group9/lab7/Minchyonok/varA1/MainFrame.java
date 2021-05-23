@@ -143,7 +143,7 @@ final String address =
 .getAddress()
 .getHostAddress();
 // Выводим сообщение в текстовую область
-textAreaIncoming.append(Dat + senderName + 
+textAreaIncoming.append(Dat+" "+ senderName + 
 " (" + address + "): " + 
 message + "\n");
 }
